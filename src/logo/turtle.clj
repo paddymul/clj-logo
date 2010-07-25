@@ -44,17 +44,26 @@
     (mk-turtle :positon (turtle :position)
                :direction  corrected-angle)))
 
+(defmacro assert-direction [direction turtle]
+  `(is (= ~direction (:direction ~turtle))))
 
 (deftest test-set-direction
   (let [t (mk-turtle :position {:x 100 :y 100}  :direction 359)]
-    (is (= 80 (:direction (set-direction t 80))))
+    (is (= 80  (:direction (set-direction t 80))))
     (is (= 355 (:direction (set-direction t -5))))
-    (is (= 0  (:direction (set-direction t 360))))))
+    (is (= 0   (:direction (set-direction t 360))))))
+
+(deftest test-set-direction2
+  (let [t (mk-turtle :position {:x 100 :y 100}  :direction 359)]
+    (assert-direction 80 (set-direction t 80))
+    (assert-direction 355  (set-direction t -5))
+    (assert-direction 0    (set-direction t 360))))
+
 
 (deftest test-rotate
     (let [t (mk-turtle :position {:x 100 :y 100}  :direction 100)]
-      (is (= 120 (:direction (clockwise t 20))))
-      (is (= 80 (:direction (anti-clockwise t 20))))
-      (is (= 355 (:direction (anti-clockwise t 105))))
-      (is (= 5 (:direction (clockwise t 265))))
+      (assert-direction  120 (clockwise t 20))
+      (assert-direction  80  (anti-clockwise t 20))
+      (assert-direction  355 (anti-clockwise t 105))
+      (assert-direction  5   (clockwise t 265))
       ))
