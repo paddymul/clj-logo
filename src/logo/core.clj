@@ -1,33 +1,10 @@
 (ns logo.core
   (:use
    [rosado.processing]
+   [logo.macrology]
+   [logo.turtle]
    ;[rosado.processing.applet]
    ))
-
-(defstruct logo-turtle :position :direction)
-
-(defn move-point
-  [old-point offset]
-  [ (+ (nth old-point 0) (nth offset 0))
-    (+ (nth old-point 1) (nth offset 1))])
-
-
-(defn move-point
-  [old-point offset]
-  {
-   :x (+ (old-point :x) (offset :x))
-    :y (+ (old-point :y) (offset :y))})
-
-
-(defn forward
-  [turtle distance]
-  (let
-      [old-point (turtle :positon)]
-    (struct logo-turtle
-            (move-point
-             old-point
-             { :x distance :y 0})
-            :direction (turtle :direction))))
 
 (defn draw-point [a-point]
   (if (map? a-point)
@@ -48,12 +25,8 @@
   (stroke-float 10)
   (swap!  pointA  move5)
   (draw-point @pointA)
-
   (when (> (frame-count) 100)
-    (stop))                             
-  )
-
-
+    (/ 1 0)))
 
 (defn setup []
   (framerate 8)

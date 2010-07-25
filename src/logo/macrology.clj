@@ -1,6 +1,8 @@
-(ns logo.core
-  (:use [clojure.contrib.pprint]
-        [rosado.processing.applet]))
+(ns logo.macrology
+  (:use
+   [clojure.contrib.pprint]
+   [clojure.test]
+   [rosado.processing.applet]))
 
 
 ;; This macro allows us to define an applet as many times as we want
@@ -32,3 +34,10 @@
 ;(pprint (macroexpand-1 `(re-defapplet2 logo-play3 :title "logoemulation")))
 ;(re-defapplet2 logo-play5 :title "restartplay")
 ;(run logo-play5)
+
+
+(defmacro assert-direction [direction turtle]
+  `(is (= ~direction (:direction ~turtle))))
+
+(defmacro assert-position [position turtle]
+  `(is (= ~position (:position ~turtle))))
