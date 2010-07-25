@@ -1,6 +1,5 @@
 (ns logo.core
-  (:use [rosado.processing]
-        [clojure.contrib.pprint]
+  (:use [clojure.contrib.pprint]
         [rosado.processing.applet]))
 
 
@@ -24,6 +23,8 @@
 (defmacro rerun-defapplet [app-name & opts]
   `(do
      (re-defapplet ~app-name ~@opts)
+
+     (. Thread (sleep 200)) ;sleep here allows stumpwm to catchup 
      (run ~app-name)))
 
 
