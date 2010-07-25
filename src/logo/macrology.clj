@@ -36,8 +36,8 @@
 ;(run logo-play5)
 
 
-(defmacro assert-direction [direction turtle]
-  `(is (= ~direction (:direction ~turtle))))
 
-(defmacro assert-position [position turtle]
-  `(is (= ~position (:position ~turtle))))
+(defn assert-direction  [direction turtle]
+  (is (= direction (:direction turtle))))
+(defn assert-position  [position turtle]
+  (is (= position (:position turtle))))
