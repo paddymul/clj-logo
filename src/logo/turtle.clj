@@ -33,8 +33,11 @@
             :direction (turtle :direction))))
 
 
-(defn clockwise [turtle angle]
-     )
+(defn clockwise [turtle delta-angle]
+  (set-direction turtle (+ (:direction turtle) delta-angle )))
+
+(defn anti-clockwise [turtle delta-angle]
+  (set-direction turtle (- (:direction turtle) delta-angle )))
 
 (defn set-direction [turtle angle]
   (let [corrected-angle (mod angle 360)]
@@ -43,7 +46,15 @@
 
 
 (deftest test-set-direction
-  (let [t (mk-turtle {:x 100 :y 100}  359)]
+  (let [t (mk-turtle :position {:x 100 :y 100}  :direction 359)]
     (is (= 80 (:direction (set-direction t 80))))
     (is (= 355 (:direction (set-direction t -5))))
     (is (= 0  (:direction (set-direction t 360))))))
+
+(deftest test-rotate
+    (let [t (mk-turtle :position {:x 100 :y 100}  :direction 100)]
+      (is (= 120 (:direction (clockwise t 20))))
+      (is (= 80 (:direction (anti-clockwise t 20))))
+      (is (= 355 (:direction (anti-clockwise t 105))))
+      (is (= 5 (:direction (clockwise t 265))))
+      ))
