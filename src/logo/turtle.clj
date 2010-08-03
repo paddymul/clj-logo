@@ -2,10 +2,13 @@
   (:use
    [clojure.test]
    [clojure.contrib.def]
+   [clojure.contrib.math]
    [logo.macrology]
    ;[rosado.processing.applet]
    )
-  (:require [clojure.contrib.generic.math-functions :as generic]))
+
+  ;(:require [clojure.contrib.generic.math-functions :as generic])
+  )
   
 
 
@@ -24,9 +27,8 @@
   [old-point offset]
   {
    :x (+ (old-point :x) (offset :x))
-    :y (+ (old-point :y) (offset :y))})
+   :y (+ (old-point :y) (offset :y))})
 
-(println (move-point {:x 100 :y 100} {:x 20 :y 20}))
 
 (defn set-direction [turtle angle]
   (mk-turtle :positon (turtle :position)
@@ -41,7 +43,7 @@
 
 ;; i'm not sure what to do here, I decided to put correct-angle in
 ;; mk-turtle also, hmmm
-
+(comment
 (deftest test-set-direction2
   (let [t (mk-turtle :position {:x 100 :y 100}  :direction 359)]
     (assert-direction 80 (set-direction t 80))
@@ -55,24 +57,63 @@
       (assert-direction  80  (anti-clockwise t 20))
       (assert-direction  355 (anti-clockwise t 105))
       (assert-direction  5   (clockwise t 265))
-      ))
+      )))
 (defn sin [angle]
   (. java.lang.Math sin angle))
 
 (defn cos [angle]
   (. java.lang.Math cos angle))
 
-(defn sqrt [num]
-  (. java.lang.Math sqrt num))
+;(defn tan [angle]
+;  (. java.lang.Math tan angle))
+
+(defn asin [opp-hyp]
+  (. java.lang.Math asin opp-hyp))
+
+(defn acos [adj-hyp]
+  (. java.lang.Math acos adj-hyp))
+
+(defn atan [opp-adj]
+  (. java.lang.Math atan opp-adj))
+
+(defn atan2 [y x]
+  (. java.lang.Math atan2 y x))
+
+;(defn sqrt [num]
+;  (. java.lang.Math sqrt num))
+
+;;(defn abs [num]
+;;  (. java.lang.Math abs num))
+
+;;(defn round [num]
+;;  (. java.lang.Math round num))
 
 (defn toRadians [angle]
   (. java.lang.Math toRadians angle))
+
+(defn toDegrees [angle]
+  (. java.lang.Math toDegrees angle))
 
 (defn sinR [angle]
   (sin (toRadians angle)))
 
 (defn cosR [angle]
   (cos (toRadians angle)))
+
+;(defn tanR [angle]
+;  (tan (toRadians angle)))
+
+(defn asinD [opp-hyp]
+  (toDegrees (asin opp-hyp)))
+
+(defn acosD [adj-hyp]
+  (toDegrees (acos adj-hyp)))
+
+(defn atanD [opp-adj]
+  (correct-angle (toDegrees (atan opp-adj))))
+
+(defn atan2D [y x]
+  (correct-angle (toDegrees (atan2 y x))))
 
 
 (defn forward
@@ -82,12 +123,13 @@
        angle     (tur :direction)
        ]
     (mk-turtle
-     ;:position (move-point old-point { :x distance :y 0})
-     :position (move-point old-point { :x (* distance (sinR angle))  :y (* distance (cosR (+ 180 angle)))})
+     :position (move-point old-point
+                           { :x (* distance (sinR angle))
+                            :y (* distance (cosR (+ 180 angle)))})
      :direction (tur :direction)
      )))
 
-
+(comment
 (deftest test-movement
   ;; since :x 0, :y 0 is the upper lefthand corner of the screen, at a
   ;; heading of 0 (pointing straight up) moving up 20 should decrease
@@ -106,15 +148,82 @@
     (assert-position  {:x 100 :y 120.0} (forward t 20)))
 
   (let [t (mk-turtle :position {:x 100 :y 100}  :direction 270)]
-    (assert-position {:x 80 :y 100} (forward t 20)))
+    (assert-position {:x 80 :y 100} (forward t 20)))))
+
+
+
+(defn bearing [from-point to-point]
+  (let [a_x (-   (:x from-point) (:x to-point))
+        a_y (-     (:y from-point) (:y to-point) )]
+
+    (let [result (atan2D  a_y a_x)
+          c-result (correct-angle (- result 90))]
+      (println "a_x a_y  from-point to-point result"  a_x a_y  from-point to-point c-result)
+      c-result)))
+
+
+(def sqr32 (/ (sqrt 3) 2))
+(def sqr10032 (* sqr32 100))
+
+(defmacro assert-bearing [expected-bearing point]
+  (let [actual-bearing#  (bearing {:x 100 :y 100} point)
+        diff#  (correct-angle (- actual-bearing# expected-bearing))
+        abs-diff# (abs (correct-angle diff#))]
+    `(is (or (> 1 ~abs-diff#) (< 359 ~abs-diff#))
+         '(~expected-bearing ~diff# ~abs-diff# ~actual-bearing# ~point )  )))
+
+
+  (deftest test-bearings3
+  (println "")
+  (println "")
+
+  (assert-bearing     0   {:x 100.1  :y 0})  
+  (assert-bearing     0   {:x 100    :y 0})  
+  (assert-bearing     0   {:x  99.9  :y 0})    
+;  (assert-bearing    30   {:x  150   :y 24})
+
+  (assert-bearing    45   {:x 149.9  :y 50})   
+  (assert-bearing    45   {:x 150    :y 50})   
+  (assert-bearing    45   {:x 150.1  :y 50})   
+
+
+  (assert-bearing    90   {:x 200    :y 99.9}) 
+  (assert-bearing    90   {:x 200    :y 100})  
+  (assert-bearing    90   {:x 200    :y 100.1})
+  (assert-bearing   135   {:x 149.9  :y 150})  
+  (assert-bearing   135   {:x 150    :y 150})  
+  (assert-bearing   135   {:x 150.1  :y 150})  
+
+  (assert-bearing   180   {:x 100.1  :y 200})
+  (assert-bearing   180   {:x 100    :y 200})
+  (assert-bearing   180   {:x  99.9  :y 200})
+
+  (assert-bearing   225   {:x  49.9  :y 150})  
+  (assert-bearing   225   {:x  50    :y 150})
+  (assert-bearing   225   {:x  50.1  :y 150})
   
+  (assert-bearing   270   {:x   1    :y 100.1})  
+  (assert-bearing   270   {:x   1    :y 100})   
+  (assert-bearing   270   {:x   1    :y 99.9})
   
+  (assert-bearing   315   {:x  49.9  :y  50})
+  (assert-bearing   315   {:x  50    :y  50})
+  (assert-bearing   315   {:x  50.1  :y  50}) 
+
   )
 
+;    (correct-angle (+ 90 (atan2D a_y a_x)))))
+
+
+(deftest assert-bearings4
+
+  (assert-bearing     0 {:x 100    :y 1})  
+  (assert-bearing    90 {:x 200    :y 100})
+  (assert-bearing   180 {:x 100    :y 200})
+  (assert-bearing   270 {:x   1    :y 100}))
 (comment
   (= (sin x) (/ opposite hypoenuese))
   (= (* hypoenuese (sin x)) opposite)
-  
 
   )
-  
+
