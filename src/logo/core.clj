@@ -3,6 +3,7 @@
    ;[rosado.processing]
    [logo.macrology]
    [logo.turtle]
+   [logo.turtle-prim :only [mk-turtle]]
    [logo.draw]
    [rosado.processing :only [background-float point
                              frame-count stroke-weight
@@ -23,7 +24,7 @@
   (background-float 25)
   (stroke-weight 80)
   (stroke-float 90)
-  (swap!  pointA  move5)
+  ;(swap!  pointA  move5)
   ;;(swap! turtle-a forward 5)
   (swap! angle-a (fn [num] (+ num 40)))
   ;(println  @turtle-a)

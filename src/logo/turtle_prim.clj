@@ -30,11 +30,10 @@
 
 
 (defn set-direction [turtle angle]
-  (println (turtle :position))
   (mk-turtle :position (turtle :position)
              :direction  (correct-angle angle)))
-(deftest set-direction-test
 
+(deftest set-direction-test
   (let [t (mk-turtle :position {:x 100 :y 100}  :direction 0)]
     (assert-position  {:x 100 :y 100} (set-direction t 20))))
 
@@ -92,7 +91,7 @@
 
     (let [result (atan2D  a_y a_x)
           c-result (correct-angle (- result 90))]
-      (println "a_x a_y  from-point to-point result"  a_x a_y  from-point to-point c-result)
+      ;(println "a_x a_y  from-point to-point result"  a_x a_y  from-point to-point c-result)
       c-result)))
 
 
