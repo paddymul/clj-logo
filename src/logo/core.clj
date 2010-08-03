@@ -3,40 +3,40 @@
    ;[rosado.processing]
    [logo.macrology]
    [logo.turtle]
+   [logo.draw]
    [rosado.processing :only [background-float point
                              frame-count stroke-weight
                              no-stroke stroke-float
                              smooth
-                             ]]
-   ))
-;(require 'rosado.processing)
-
-(comment
-(defn move-point
-  [old-point offset]
-  {
-   :x (+ (old-point :x) (offset :x))
-   :y (+ (old-point :y) (offset :y))})
-)
-(defn draw-point [a-point]
-  (if (map? a-point)
-    (point (a-point :x) (a-point :y)))
-  (if (vector? a-point)
-    (point (nth a-point 0) (nth a-point 1))))
+                             ]]))
 
 
 
+
+
+(def angle-a (atom 180))
 (def pointA (atom {:x 50, :y  30}))
 
-(defn move5 [aPoint]
-  (move-point aPoint  {:x 5, :y 7}))
-
+(def turtle-a (atom (mk-turtle :position {:x 300 :y 300} :direction 215)))
+;(reset! turtle-a (set-direction @turtle-a @angle-a))
 (defn draw  []
   (background-float 25)
   (stroke-weight 80)
   (stroke-float 90)
   (swap!  pointA  move5)
+  ;;(swap! turtle-a forward 5)
+  (swap! angle-a (fn [num] (+ num 40)))
+  ;(println  @turtle-a)
+  ;(reset! turtle-a (forward @turtle-a 2))
+  (forward! turtle-a 2)
+  (clockwise! turtle-a 4)
+  ;(reset! turtle-a (clockwise @turtle-a 4))
+
+
   (draw-point @pointA)
+  ;(draw-point (@turtle-a :position))
+  (draw-turtle turtle-a)
+  
   (when (> (frame-count) 100)
     (/ 1 0)))
 
