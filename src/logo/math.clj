@@ -13,6 +13,9 @@
 (defn -c [x y]
   (correct-angle (- x y)))
 
+(defn +c [x y]
+  (correct-angle (+ x y)))
+
 (defn angle-negative [angle]
   " given an angle between 0 and 360 returns an angle between -180 and
   180"
