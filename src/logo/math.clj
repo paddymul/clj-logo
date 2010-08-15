@@ -10,6 +10,28 @@
 (defn correct-angle [angle]
   (mod angle 360))
 
+(defn -c [x y]
+  (correct-angle (- x y)))
+
+(defn angle-negative [angle]
+  " given an angle between 0 and 360 returns an angle between -180 and
+  180"
+  (if (> angle 180)
+    (- angle 360)
+    angle))
+
+(deftest angle-negative-test
+  (is (= -30 (angle-negative 330)))
+  (is (= 30 (angle-negative 30))))
+
+(defn angle-diff [from to]
+  (angle-negative (-c to from)))
+
+(deftest angle-diff-test
+  (is (= -30 (angle-diff 100 70)))
+  (is (= 30 (angle-diff  70 100)))
+  (is (= 30 (angle-diff  350 20))))
+
 (defn sin [angle]
   (. java.lang.Math sin angle))
 
