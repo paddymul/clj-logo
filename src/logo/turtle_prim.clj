@@ -20,13 +20,16 @@
                   :direction 0]
   (struct logo-turtle position (correct-angle direction)))
 
-
-
 (defn move-point
   [old-point offset]
   {
    :x (+ (old-point :x) (offset :x))
    :y (+ (old-point :y) (offset :y))})
+
+(defn move-point-dir [old-point angle  distance]
+  (move-point old-point
+              { :x (* distance (sinR angle))
+               :y (* distance (cosR (+ 180 angle)))}))
 
 
 (defn set-direction [turtle angle]
@@ -47,8 +50,6 @@
 
 ;; i'm not sure what to do here, I decided to put correct-angle in
 ;; mk-turtle also, hmmm
-
-
 (defn forward
   [tur distance]
   (let
@@ -56,11 +57,10 @@
        angle     (tur :direction)
        ]
     (mk-turtle
-     :position (move-point old-point
-                           { :x (* distance (sinR angle))
-                            :y (* distance (cosR (+ 180 angle)))})
+     :position (move-point-dir old-point angle distance)
      :direction (tur :direction)
      )))
+
 
 
 (deftest test-movement
