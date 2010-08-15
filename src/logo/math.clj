@@ -32,6 +32,26 @@
   (is (= 30 (angle-diff  70 100)))
   (is (= 30 (angle-diff  350 20))))
 
+(defn point-distance [from to]
+  " expects to maps with keys of :x :y in each "
+  (sqrt (+
+   (expt (- (from :x) (to :x)) 2)
+   (expt (- (from :y) (to :y)) 2))))
+
+(defn assert-distance [dist x1 y1 x2 y2]
+  (is (= dist
+       (point-distance
+          {:x x1 :y y1} {:x x2 :y y2}))))
+
+(deftest point-distance-test
+  (assert-distance 0 0 0 0 0)
+  (assert-distance 1 0 0 0 1)
+  (assert-distance 1 0 0 1 0)
+  (assert-distance 5 0 0 3 4)
+  (assert-distance 5 3 4 0 0)
+  (assert-distance 5 0 0 -3 -4)
+  (assert-distance 5 -3 -4 0 0))
+
 (defn sin [angle]
   (. java.lang.Math sin angle))
 
