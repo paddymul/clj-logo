@@ -1,7 +1,7 @@
 (ns logo.core
   (:use
-   ;[rosado.processing]
-   [logo.macrology]
+                                        ;[rosado.processing]
+   [logo.processing-util :only [setup rrd rerun-defapplet]]
    [logo.turtle]
    [logo.turtle-prim :only [mk-turtle]]
    [logo.draw]
@@ -41,12 +41,9 @@
   (when (> (frame-count) 100)
     (/ 1 0)))
 
-(defn setup []
-  (rosado.processing/framerate 8)
-  (rosado.processing/smooth)
-  (rosado.processing/no-stroke))
 
-(rerun-defapplet logo-play :title "logoemulation"
+;;(rerun-defapplet logo-play :title "logoemulation"
+(rrd logo-play :title "logoemulation"
   :size [800 800]
   :setup setup :draw draw)
 
