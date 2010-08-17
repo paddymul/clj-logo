@@ -42,8 +42,7 @@
     (/ 1 0)))
 
 
-;;(rerun-defapplet logo-play :title "logoemulation"
-(rrd logo-play :title "logoemulation"
+(rerun-defapplet logo-play :title "logoemulation"
   :size [800 800]
   :setup setup :draw draw)
 
