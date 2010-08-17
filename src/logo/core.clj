@@ -1,10 +1,9 @@
 (ns logo.core
   (:use
                                         ;[rosado.processing]
-   [logo.processing-util :only [setup rrd rerun-defapplet]]
-   [logo.turtle]
+   [logo.processing-util :only [setup rerun-defapplet]]
    [logo.turtle-prim :only [mk-turtle]]
-   [logo.draw]
+   [logo.draw :only [forward! clockwise! draw-turtle draw-point]]
    [rosado.processing :only [background-float point
                              frame-count stroke-weight
                              no-stroke stroke-float

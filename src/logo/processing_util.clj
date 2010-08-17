@@ -5,7 +5,7 @@
                              no-stroke stroke-float
                              smooth
                              ]]
-    [rosado.processing.applet :only [defapplet]]
+    [rosado.processing.applet :only [defapplet stop run]]
     ))
 
 

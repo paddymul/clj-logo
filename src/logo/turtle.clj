@@ -1,26 +1,11 @@
 (ns logo.turtle
   (:use
    [clojure.contrib.pprint]
-   [logo.turtle-prim]
-   [logo.draw]
+
+
    [clojure.contrib.macro-utils]))
   
 
-
-(defmacro forward! [turtle distance]
-  `(reset! ~turtle (forward @~turtle ~distance)))
-
-(defmacro set-direction! [turtle distance]
-  `(reset! ~turtle (set-direction @~turtle ~distance)))
-
-(defmacro clockwise! [turtle distance]
-  `(reset! ~turtle (clockwise @~turtle ~distance)))
-
-(defmacro anti-clockwise! [turtle distance]
-  `(reset! ~turtle (clockwise @~turtle ~distance)))
-
-(defmacro draw-turtle [turtle]
-  `(draw-point (@~turtle :position)))
 
 (defmacro make-destructive2 [func]
   (let [mac-name (symbol (str (name func) "!"))]
