@@ -4,7 +4,7 @@
    [rosado.processing :only [background-float point
                              frame-count stroke-weight
                              no-stroke stroke-float
-                             smooth
+                             smooth line
                              ]]
    [logo.turtle-prim :only [set-direction forward clockwise anti-clockwise]]
    ))
@@ -31,3 +31,16 @@
 
 (defmacro draw-turtle [turtle]
   `(draw-point (@~turtle :position)))
+
+(defn draw-forward [old-turtle distance]
+  (let [n-turtle (forward old-turtle distance)]
+    
+    (line (:x (:position old-turtle))
+          (:y (:position old-turtle))
+          (:x (:position n-turtle))
+          (:y (:position n-turtle)))
+  n-turtle))
+
+
+(defmacro draw-forward! [turtle distance]
+  `(reset! ~turtle (draw-forward  @~turtle ~distance)))
