@@ -33,6 +33,7 @@
 (deftest angle-diff-test
   (is (= -30 (angle-diff 100 70)))
   (is (= 30 (angle-diff  70 100)))
+  (is (= -30 (angle-diff  10 340)))
   (is (= 30 (angle-diff  350 20))))
 
 (defn point-distance [from to]
