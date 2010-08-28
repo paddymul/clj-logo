@@ -87,7 +87,7 @@
 
 (defn bearing [from-point to-point]
   (let [a_x (-   (:x from-point) (:x to-point))
-        a_y (-     (:y from-point) (:y to-point) )]
+        a_y (-   (:y from-point) (:y to-point) )]
 
     (let [result (atan2D  a_y a_x)
           c-result (correct-angle (- result 90))]
