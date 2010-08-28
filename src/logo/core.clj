@@ -3,7 +3,8 @@
                                         ;[rosado.processing]
    [logo.processing-util :only [setup rerun-defapplet]]
    [logo.turtle-prim :only [mk-turtle]]
-   [logo.draw :only [forward! clockwise! draw-turtle draw-point]]
+   [logo.draw :only [forward! clockwise! draw-forward!  draw-forward
+                     draw-turtle draw-point]]
    [rosado.processing :only [background-float point
                              frame-count stroke-weight
                              no-stroke stroke-float
@@ -18,10 +19,11 @@
 (def pointA (atom {:x 50, :y  30}))
 
 (def turtle-a (atom (mk-turtle :position {:x 300 :y 300} :direction 215)))
+(def turtle-b (atom (mk-turtle :position {:x 300 :y 300} :direction 215)))
 ;(reset! turtle-a (set-direction @turtle-a @angle-a))
 (defn draw  []
   (background-float 25)
-  (stroke-weight 80)
+  (stroke-weight 10)
   (stroke-float 90)
   ;(swap!  pointA  move5)
   ;;(swap! turtle-a forward 5)
@@ -29,6 +31,8 @@
   ;(println  @turtle-a)
   ;(reset! turtle-a (forward @turtle-a 2))
   (forward! turtle-a 2)
+  (draw-forward! turtle-b 30)
+  ;;(draw-forward  @turtle-b 30)
   (clockwise! turtle-a 4)
   ;(reset! turtle-a (clockwise @turtle-a 4))
 
