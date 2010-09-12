@@ -1,11 +1,14 @@
-(ns logo.turtle-prim
+(clojure.core/use 'nstools.ns)
+(ns+   logo.turtle-prim
+  (:clone nstools.generic-math)
+  (:from units dimension? in-units-of)
   (:use
    [clojure.contrib.pprint]
    [clojure.test]
    [clojure.contrib.def]
-   [clojure.contrib.math]
+   ;;[clojure.contrib.math]
    [logo.macrology]
-   [logo.math]
+   ;;[logo.math]
    ;[rosado.processing.applet]
    )
 

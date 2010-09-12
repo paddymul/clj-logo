@@ -1,7 +1,10 @@
-(ns logo.math
+(clojure.core/use 'nstools.ns)
+(ns+    logo.math
+  (:clone nstools.generic-math)
+  (:from units dimension? in-units-of)
   (:use
    [clojure.test]
-   [clojure.contrib.math]
+   ;;[clojure.contrib.math]
    )
 
 
@@ -38,9 +41,12 @@
 
 (defn point-distance [from to]
   " expects to maps with keys of :x :y in each "
+  (println "point-distance" from to)
+  (let [dx  (- (from :x) (to :x))
+        dy  (- (from :y) (to :y))]
   (sqrt (+
-   (expt (- (from :x) (to :x)) 2)
-   (expt (- (from :y) (to :y)) 2))))
+   (* dx dx)
+   (* dy dy)))))
 
 (defn assert-distance [dist x1 y1 x2 y2]
   (is (= dist
@@ -55,7 +61,7 @@
   (assert-distance 5 3 4 0 0)
   (assert-distance 5 0 0 -3 -4)
   (assert-distance 5 -3 -4 0 0))
-
+(comment
 (defn sin [angle]
   (. java.lang.Math sin angle))
 
@@ -85,7 +91,7 @@
 
 ;;(defn round [num]
 ;;  (. java.lang.Math round num))
-
+)
 (defn toRadians [angle]
   (. java.lang.Math toRadians angle))
 
