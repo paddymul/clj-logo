@@ -62,14 +62,6 @@
   (assert-distance 5 0 0 -3 -4)
   (assert-distance 5 -3 -4 0 0))
 
-(defn sinR [angle]
-  (sin (toRadians angle)))
-
-(defn cosR [angle]
-  (cos (toRadians angle)))
-(defn atan2D [y x]
-  (correct-angle (toDegrees (atan2 y x))))
-
 (comment
 (defn sin [angle]
   (. java.lang.Math sin angle))
@@ -108,6 +100,14 @@
 (defn toDegrees [angle]
   (. java.lang.Math toDegrees angle))
 
+
+(defn sinR [angle]
+  (sin (toRadians angle)))
+
+(defn cosR [angle]
+  (cos (toRadians angle)))
+(defn atan2D [y x]
+  (correct-angle (toDegrees (atan2 y x))))
 
 ;(defn tanR [angle]
 ;  (tan (toRadians angle)))
