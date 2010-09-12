@@ -41,7 +41,6 @@
 
 (defn point-distance [from to]
   " expects to maps with keys of :x :y in each "
-  (println "point-distance" from to)
   (let [dx  (- (from :x) (to :x))
         dy  (- (from :y) (to :y))]
   (sqrt (+
