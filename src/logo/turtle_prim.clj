@@ -8,7 +8,7 @@
    [clojure.contrib.def]
    ;;[clojure.contrib.math]
    [logo.macrology]
-   ;;[logo.math]
+   [logo.math :only [correct-angle sinR cosR atan2D]]
    ;[rosado.processing.applet]
    )
 
