@@ -10,7 +10,7 @@
 
 
 (defn setup []
-  (rosado.processing/framerate 8)
+  (rosado.processing/framerate 30)
   (rosado.processing/smooth)
   (rosado.processing/no-stroke))
 
