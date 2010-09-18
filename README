@@ -1,6 +1,18 @@
 # logo
 
-FIXME: write description
+This is an implementation of a logo like language ontop of clj-processing.
+
+currently it is fairly dependent on clj-processing, this might change
+in the future, because of the way processing works, you basically
+can't do much with turtle manipulation at the repl.
+
+This isn't meant to be a full implementation of logo, I have primarily
+written this to support sail-clojure.
+
+This has been generally influenced by netlogo
+http://ccl.northwestern.edu/netlogo/
+
+
 
 ## Usage
 
